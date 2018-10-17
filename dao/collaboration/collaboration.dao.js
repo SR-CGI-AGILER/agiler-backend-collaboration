@@ -3,18 +3,18 @@ const room = require('../../model/room');
 
 function findRoom(name) {
     return new Promise(function (resolve, reject) {
-        console.log(name)
+        // console.log(name.roomName)
         room.find({
             "roomName": name.roomName
         }, function (err, data) {
-            // console.log(err, data)
+            // console.log(data, "sdfsdfsdfsdfsdfsdf")
             resolve(data)
         })
     })
-
 }
 
 function createRoom(name) {
+    console.log("lkasjdlkajsdlkajsldkj@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     return new Promise(function (resolve, reject) {
         const temp = new room({
             "roomName": name.roomName,
@@ -22,7 +22,7 @@ function createRoom(name) {
         })
         temp.save(function (err, data) {
             if (err)
-                console.log(err, data)
+                console.log(err, data, "Sdfasdfasdfasdfasdfasdfasdf")
             resolve(data)
         })
     })

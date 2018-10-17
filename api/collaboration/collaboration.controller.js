@@ -1,30 +1,46 @@
 const collaborationDao = require('../../dao/collaboration/collaboration.dao')
 const socketconn = require('../../socket-connection/index');
-function findRoom(req, res) {
-    let data = {
+
+
+function findRoomResponse(req, res) {
+    let roomData = {
         roomName: req.params.roomname,
         members: req.body.members
     }
-    collaborationDao.findRoom(data).then(data => {
-        // socketconn.instantiateSocket(io);
-        socketconn.joinroom(data.roomName);
-    //   jointheRoomMethod(data);
-        res.status('201').send({
-            data: req.body
-        })
+    
+    collaborationDao.findRoom(roomData).then(doc => {
+     
+        // console.log(data.roomName+" in controller")
+       
+        
+        if(doc.length === 0) {
 
+            collaborationDao.createRoom(roomData)
+            socketconn.joinroom(roomData.roomName);
+
+            res.status(201).send({
+                payload: {
+                    msg: "New Room Created"
+                }
+            })
+        }else {
+            socketconn.joinroom(roomData.roomName);
+            res.status(200).send({
+                payload: {
+                    msg : `Joined ${req.params.roomname}`
+                }
+            })
+        }
+        
+        
+        
     })
-    if(data===null || data === []){
-        socketconn.joinroom(data.roomName)
-        collaborationDao.createRoom(data).then(data => {
-            
-        })
-        // collaborationDao.createRoom(data)
-        // SocketIO
-        res.send({"Here":" "});
-    }
+}
+
+function inviteUser(req, res) {
+
 }
 
 
 
-module.exports = { findRoom }
+module.exports = { findRoomResponse, inviteUser }
