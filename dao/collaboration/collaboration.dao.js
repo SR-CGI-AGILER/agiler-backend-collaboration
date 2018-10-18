@@ -51,8 +51,10 @@ function getRooms(userData) {
             members: userData.member
         }, function (err, data) {
             // console.log(data)
-const message = require('../../model/message');
-
+            resolve(data)
+        })
+    })
+}   
 
 function getAllMessages(query) {
     
