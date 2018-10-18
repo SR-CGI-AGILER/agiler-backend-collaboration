@@ -27,4 +27,37 @@ function createRoom(name) {
         })
     })
 }
-module.exports = { findRoom, createRoom }
+
+function addUser(user) {
+    return new Promise(function (resolve, reject) {
+        room.findOneAndUpdate({
+            "roomName": user.roomName
+        }, {
+            $set: {
+                "members": user.userId
+            }
+        }, function (err, data) {
+            resolve(data)
+        })
+    })
+
+}
+
+function getRooms(userData) {
+    return new Promise(function (resolve, reject) {
+        console.log(userData)
+        room.find({
+            members: userData.member
+        }, function (err, data) {
+            // console.log(data)
+            resolve(data)
+        })
+    })
+}
+
+module.exports = {
+    findRoom,
+    createRoom,
+    addUser,
+    getRooms
+}

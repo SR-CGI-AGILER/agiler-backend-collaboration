@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var roomSchema = new Schema({
     roomName : String,
     createdAt : Date,
-    members : [String]
+    members : [ String ]
     
 });
 
