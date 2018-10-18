@@ -40,6 +40,23 @@ function inviteUserUpdate(req, res) {
         res.status(201).send({
             msg: "User added to room",
             data: doc
+        });
+    })
+}   
+
+function allMessages(req,res)  {
+    let queryParams = {
+        roomName: req.params.room,
+        limit: parseInt(req.query.limit) || 10,
+        page: parseInt(req.query.page) || 0
+    }
+
+    collaborationDao.getAllMessages(queryParams).then(doc => {
+        res.send({
+            length: doc.length,            
+            payload: {
+                data: doc
+            }
         })
     })
 }
@@ -61,5 +78,6 @@ function getRoomsResponse(req, res) {
 module.exports = {
     findRoomResponse,
     inviteUserUpdate,
-    getRoomsResponse
+    getRoomsResponse,
+    allMessages
 }

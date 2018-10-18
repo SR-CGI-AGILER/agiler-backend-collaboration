@@ -1,5 +1,6 @@
 const db = require('../../db-connection/mongo');
 const room = require('../../model/room');
+const message = require('../../model/message')
 
 function findRoom(name) {
     return new Promise(function (resolve, reject) {
@@ -50,14 +51,33 @@ function getRooms(userData) {
             members: userData.member
         }, function (err, data) {
             // console.log(data)
-            resolve(data)
+const message = require('../../model/message');
+
+
+function getAllMessages(query) {
+    
+    
+    return new Promise(function (resolve, reject) {
+        
+        message.find({
+            "roomname": query.roomName
+        }).limit(query.limit)
+        .skip(query.page * query.limit)
+        .exec(function(err, doc) {
+            if (err) {
+                reject(err)
+            }else {
+                resolve(doc)
+            }
         })
-    })
+})
 }
+
 
 module.exports = {
     findRoom,
     createRoom,
     addUser,
-    getRooms
+    getRooms,
+    getAllMessages
 }
