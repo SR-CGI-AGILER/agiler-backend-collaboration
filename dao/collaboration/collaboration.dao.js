@@ -7,14 +7,7 @@ function getAllMessages(query) {
     // console.log(x.roomName, "this is X");
     
     return new Promise(function (resolve, reject) {
-        // console.log(x.roomName)
-        // message.find({
-        //     // "messages" : x.
-        //     "roomname": x.roomName
-        // }).exec(function(err, data) {
-        //     // console.log(err,data);
-        //     resolve(data);
-        // })
+        
         message.find({
             "roomname": query.roomName
         }).limit(query.limit)

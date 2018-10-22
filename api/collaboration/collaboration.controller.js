@@ -2,16 +2,6 @@ const collaborationDao = require ('../../dao/collaboration/collaboration.dao')
 const socketConnection =  require('../../socket-connection/index')
 
 
-// function getPages(req,res) {
-//     let data = {
-//         limit: req.query.limit || 10,
-//         pageNo: req.query.page || 0,
-//         room: req.params.room
-//     }
-
-//     collaborationDao.
-// }
-
 function allMessages(req,res)  {
     let queryParams = {
         roomName: req.params.room,
@@ -20,8 +10,7 @@ function allMessages(req,res)  {
     }
 
     collaborationDao.getAllMessages(queryParams).then(doc => {
-        // socketConnectio
-        // collaborationDao.abc();
+        
         res.send({
             length: doc.length,            
             payload: {
