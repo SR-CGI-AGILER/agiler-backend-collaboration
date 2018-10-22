@@ -34,7 +34,7 @@ function addUser(user) {
         room.findOneAndUpdate({
             "roomName": user.roomName
         }, {
-            $push: {
+            $addToSet: {
                 "members": user.userId
             }
         }, function (err, data) {
