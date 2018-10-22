@@ -31,7 +31,7 @@ function findRoomResponse(req, res) {
 }
 
 function inviteUserUpdate(req, res) {
-    console.log("aojffbjodjoefjeofj")
+    // console.log("aojffbjodjoefjeofj")
     let userData = {
         roomName: req.params.roomname,
         userId: req.params.userId
