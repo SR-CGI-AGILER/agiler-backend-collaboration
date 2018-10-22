@@ -1,15 +1,13 @@
-const mongoose = require('../db-connection/mongo');
-const Schema = mongoose.Schema;
+var mongoose = require('../db-connection/mongo');
+var Schema = mongoose.Schema;
 
-let roomSchema = new Schema({
-    
-    roomname : String,
+var roomSchema = new Schema({
+    roomName : String,
     createdAt : Date,
-    topic : String,
-    members : [{memberId : String}]
-
+    members : [ String ]
+    
 });
 
-let room = mongoose.model('room', roomSchema);
+var room = mongoose.model('room', roomSchema);
 
 module.exports = room;

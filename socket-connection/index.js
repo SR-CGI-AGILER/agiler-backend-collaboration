@@ -1,16 +1,18 @@
 var socketIns;
 
-function instantiateSocket(io) {
+function instantiateSocket(io){
     io.on('connection', function(socket){
-        console.log(socket.id)
-        socketIns = socket;
-    })
+        // console.log("fkjfhaofhij")
+        // console.log(socket.id);
+        socketIns =  socket;
+        // console.log(socket);
+})
 }
 
-function joinRoom(roomname) {
-    console.log(roomname);
+function joinroom(roomname){
+    // console.log(roomname);
     socketIns.join(roomname);
-    console.log(socketIns.adapter.rooms);
+    // console.log(socketIns.adapter.rooms);
 }
 
-module.exports = { instantiateSocket, joinRoom }
+module.exports = { instantiateSocket, joinroom }
