@@ -1,6 +1,7 @@
 const db = require('../../db-connection/mongo');
 const room = require('../../model/room');
 const message = require('../../model/message')
+// const message = require('../../model/message');
 
 function findRoom(name) {
     return new Promise(function (resolve, reject) {
@@ -31,6 +32,7 @@ function createRoom(name) {
 
 function addUser(user) {
     return new Promise(function (resolve, reject) {
+        console.log("here in DAO")
         room.findOneAndUpdate({
             "roomName": user.roomName
         }, {
@@ -46,14 +48,16 @@ function addUser(user) {
 
 function getRooms(userData) {
     return new Promise(function (resolve, reject) {
-        console.log(userData)
+        console.log(userData, "here in DAO")
         room.find({
             members: userData.member
         }, function (err, data) {
             // console.log(data)
-const message = require('../../model/message');
-
-
+            resolve(data)
+        })
+    })
+}
+    
 function getAllMessages(query) {
     
     
