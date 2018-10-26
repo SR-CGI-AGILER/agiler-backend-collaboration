@@ -6,6 +6,6 @@ router.put('/chat-room/invite/:roomname/user/:userId', collaborationController.i
 router.get('/user/:userId/rooms', collaborationController.getRoomsResponse);
  
 router.get('/chat-room/:room/messages/:limit?/:page?', collaborationController.allMessages);
-// router.get('/chat-room/:room/messages/:limit?/:page?', collaborationController.)
+router.post('/chat-room/:room/messages', collaborationController.sendMessages);
 
 module.exports = router
