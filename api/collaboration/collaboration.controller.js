@@ -10,7 +10,6 @@ function findRoomResponse(req, res) {
 
     collaborationDao.findRoom(roomData).then(doc => {
 
-        // console.log(data.roomName+" in controller")
         if (doc.length === 0) {
             collaborationDao.createRoom(roomData)
             socketconn.joinroom(roomData.roomName);
@@ -31,7 +30,7 @@ function findRoomResponse(req, res) {
 }
 
 function inviteUserUpdate(req, res) {
-    // console.log("aojffbjodjoefjeofj")
+    
     let userData = {
         roomName: req.params.roomname,
         userId: req.params.userId
@@ -47,11 +46,30 @@ function inviteUserUpdate(req, res) {
 function allMessages(req,res)  {
     let queryParams = {
         roomName: req.params.room,
-        limit: parseInt(req.query.limit) || 10,
+        limit: parseInt(req.query.limit) || 20,
         page: parseInt(req.query.page) || 0
     }
 
     collaborationDao.getAllMessages(queryParams).then(doc => {
+        res.send({
+            length: doc.length,            
+            payload: {
+                data: doc
+            }
+        })
+    })
+}
+
+function sendMessages(req,res)  {
+    let queryParams = {
+        roomName: req.params.room,
+        message: req.body.messages,
+        createdBy: req.body.createdBy,
+        createdAt: req.body.createdAt
+        
+    }
+    console.log(queryParams)
+    collaborationDao.postMessages(queryParams).then(doc => {
         res.send({
             length: doc.length,            
             payload: {
@@ -79,5 +97,6 @@ module.exports = {
     findRoomResponse,
     inviteUserUpdate,
     getRoomsResponse,
-    allMessages
+    allMessages,
+    sendMessages
 }

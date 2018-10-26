@@ -3,19 +3,17 @@ const room = require('../../model/room');
 const message = require('../../model/message')
 
 function findRoom(name) {
-    return new Promise(function (resolve, reject) {
-        // console.log(name.roomName)
+    return new Promise(function (resolve, reject) {      
         room.find({
             "roomName": name.roomName
-        }, function (err, data) {
-            // console.log(data, "sdfsdfsdfsdfsdfsdf")
+        }, function (err, data) {            
             resolve(data)
         })
     })
 }
 
 function createRoom(name) {
-    console.log("lkasjdlkajsdlkajsldkj@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    console.log("lkasjd")
     return new Promise(function (resolve, reject) {
         const temp = new room({
             "roomName": name.roomName,
@@ -51,15 +49,13 @@ function getRooms(userData) {
         room.find({
             members: userData.member
         }, function (err, data) {
-            // console.log(data)
             resolve(data)
         })
     })
 }   
 
 function getAllMessages(query) {
-    
-    
+        
     return new Promise(function (resolve, reject) {
         
         message.find({
@@ -67,6 +63,28 @@ function getAllMessages(query) {
         }).limit(query.limit)
         .skip(query.page * query.limit)
         .exec(function(err, doc) {
+            if (err) {
+                reject(err)
+            }else {
+                console.log(doc, "respose form the database")
+                resolve(doc)
+            }
+        })
+})
+}
+
+function postMessages(query) {
+       
+    return new Promise(function (resolve, reject) {
+        
+        const temp = new message({
+            "roomName": query.roomName,
+            "messages": query.message,
+            "createdBy": query.createdBy,
+            "createdAt": query.createdAt
+        })
+        
+        temp.save(function (err, doc) {
             if (err) {
                 reject(err)
             }else {
@@ -82,5 +100,6 @@ module.exports = {
     createRoom,
     addUser,
     getRooms,
-    getAllMessages
+    getAllMessages,
+    postMessages
 }
