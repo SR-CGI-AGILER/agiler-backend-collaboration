@@ -31,7 +31,6 @@ function findRoomResponse(req, res) {
 }
 
 function inviteUserUpdate(req, res) {
-    // console.log("aojffbjodjoefjeofj")
     let userData = {
         roomName: req.params.roomname,
         userId: req.params.userId
@@ -42,9 +41,9 @@ function inviteUserUpdate(req, res) {
             data: doc
         });
     })
-}   
+}
 
-function allMessages(req,res)  {
+function allMessages(req, res) {
     let queryParams = {
         roomName: req.params.room,
         limit: parseInt(req.query.limit) || 10,
@@ -53,7 +52,7 @@ function allMessages(req,res)  {
 
     collaborationDao.getAllMessages(queryParams).then(doc => {
         res.send({
-            length: doc.length,            
+            length: doc.length,
             payload: {
                 data: doc
             }

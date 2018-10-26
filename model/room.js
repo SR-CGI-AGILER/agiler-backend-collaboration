@@ -5,7 +5,6 @@ var roomSchema = new Schema({
     roomName : String,
     createdAt : Date,
     members : [ String ]
-    
 });
 
 var room = mongoose.model('room', roomSchema);
