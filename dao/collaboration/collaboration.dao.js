@@ -79,7 +79,7 @@ function postMessages(query) {
     return new Promise(function (resolve, reject) {
         
         const temp = new message({
-            "roomName": query.roomName,
+            "roomname": query.roomname,
             "messages": query.message,
             "createdBy": query.createdBy,
             "createdAt": query.createdAt
