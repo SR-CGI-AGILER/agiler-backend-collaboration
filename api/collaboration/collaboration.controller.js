@@ -46,7 +46,7 @@ function inviteUserUpdate(req, res) {
 function allMessages(req,res)  {
     let queryParams = {
         roomName: req.params.room,
-        limit: parseInt(req.query.limit) || 10,
+        limit: parseInt(req.query.limit) || 50,
         page: parseInt(req.query.page) || 0
     }
 
@@ -62,7 +62,7 @@ function allMessages(req,res)  {
 
 function sendMessages(req,res)  {
     let queryParams = {
-        roomName: req.params.room,
+        roomname: req.params.room,
         message: req.body.messages,
         createdBy: req.body.createdBy,
         createdAt: req.body.createdAt
