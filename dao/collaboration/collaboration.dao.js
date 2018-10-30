@@ -49,6 +49,7 @@ function getRooms(userData) {
         room.find({
             members: userData.member
         }, function (err, data) {
+            console.log(err)
             resolve(data)
         })
     })
