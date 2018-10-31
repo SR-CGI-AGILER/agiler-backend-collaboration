@@ -1,6 +1,9 @@
 var socketIns;
+var ioInst;
 
 function instantiateSocket(io){
+    ioInst = io;
+    console.log()
     io.on('connection', function(socket){
         // console.log("fkjfhaofhij")
          console.log(socket.id);
@@ -8,9 +11,15 @@ function instantiateSocket(io){
 })
 }
 
-function joinroom(roomname){    
+function joinroom(roomname){ 
     socketIns.join(roomname);
      console.log(socketIns.adapter.rooms);
 }
 
-module.exports = { instantiateSocket, joinroom }
+function sendMessageToRoom(message) {
+    // console.log(ioInst, "this is io object")
+
+    ioInst.in(message.roomname).emit('message', message)
+}
+
+module.exports = { instantiateSocket, joinroom, sendMessageToRoom }
