@@ -17,7 +17,6 @@ app.use(function(req, res, next) {
 
 app.use(logger('dev'))
 
-
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 app.use("/api/v1", collaboration)

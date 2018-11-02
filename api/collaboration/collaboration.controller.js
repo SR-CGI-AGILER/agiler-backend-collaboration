@@ -63,7 +63,8 @@ function allMessages(req,res)  {
 function sendMessages(req,res)  {
     let queryParams = {
         roomname: req.params.room,
-        message: req.body.messages,
+        picture: req.body.picture,
+        messages: req.body.messages,
         createdBy: req.body.createdBy,
         createdAt: req.body.createdAt
         

@@ -79,7 +79,8 @@ function postMessages(query) {
         
         const temp = new message({
             "roomname": query.roomname,
-            "messages": query.message,
+            "picture": query.picture,
+            "messages": query.messages,
             "createdBy": query.createdBy,
             "createdAt": query.createdAt
         })
