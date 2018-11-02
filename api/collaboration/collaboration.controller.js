@@ -2,7 +2,7 @@ const collaborationDao = require('../../dao/collaboration/collaboration.dao')
 const socketconn = require('../../socket-connection/index');
 
 
-function findRoomResponse(req, res) {
+function findRoomResponse(req, res) { //find a room; create if doesn't exist
     let roomData = {
         roomName: req.params.roomname,
         members: req.body.members
@@ -12,7 +12,7 @@ function findRoomResponse(req, res) {
 
         if (doc.length === 0) {
             collaborationDao.createRoom(roomData)
-            
+
             res.status(201).send({
                 payload: {
                     msg: "New Room Created"
@@ -29,15 +29,14 @@ function findRoomResponse(req, res) {
     })
 }
 
-function inviteUserUpdate(req, res) {
-    
+function inviteUserUpdate(req, res) { //invite user to a room
+
     let userData = {
         roomName: req.params.roomname,
         userId: req.params.userId
     }
     socketconn.joinroom(userData.roomName)
-    collaborationDao.addUser(userData).then(doc => {
-        ;
+    collaborationDao.addUser(userData).then(doc => {;
         res.status(201).send({
             msg: "User added to room",
             data: doc
@@ -45,12 +44,14 @@ function inviteUserUpdate(req, res) {
     })
 }
 
-function allMessages(req, res) {
+function allMessages(req, res) { //get all messages of a room
     let queryParams = {
         roomName: req.params.room,
         limit: parseInt(req.query.limit) || 50,
-        page: parseInt(req.query.page) || 0
+        page: parseInt(req.query.page) || 0,
+        picture: req.body.picture
     }
+    console.log("joining room", queryParams.roomName)
     socketconn.joinroom(queryParams.roomName);
     collaborationDao.getAllMessages(queryParams).then(doc => {
         res.send({
@@ -62,20 +63,20 @@ function allMessages(req, res) {
     })
 }
 
-function sendMessages(req,res)  {
-    debugger
+function sendMessages(req, res) { //post a message to a room
     let queryParams = {
         roomname: req.params.room,
         messages: req.body.messages,
         createdBy: req.body.createdBy,
-        createdAt: req.body.createdAt
+        createdAt: req.body.createdAt,
+        picture: req.body.picture
     }
-    console.log(queryParams)
-    
+    // console.log(queryParams)
+
     socketconn.sendMessageToRoom(queryParams);
     collaborationDao.postMessages(queryParams).then(doc => {
         res.send({
-            length: doc.length,            
+            length: doc.length,
             payload: {
                 data: doc
             }
@@ -83,7 +84,7 @@ function sendMessages(req,res)  {
     })
 }
 
-function getRoomsResponse(req, res) {
+function getRoomsResponse(req, res) { //get all rooms of a particular user
     let userData = {
         member: req.params.userId
     }

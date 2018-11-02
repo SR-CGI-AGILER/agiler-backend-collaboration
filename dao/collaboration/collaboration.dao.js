@@ -3,10 +3,10 @@ const room = require('../../model/room');
 const message = require('../../model/message')
 
 function findRoom(name) {
-    return new Promise(function (resolve, reject) {      
+    return new Promise(function (resolve, reject) {
         room.find({
             "roomName": name.roomName
-        }, function (err, data) {            
+        }, function (err, data) {
             resolve(data)
         })
     })
@@ -44,8 +44,6 @@ function addUser(user) {
 
 function getRooms(userData) {
     return new Promise(function (resolve, reject) {
-        console.log(userData)
-        console.log("afdffvcxdfhgvbjncfxhycghjvbjn")
         room.find({
             members: userData.member
         }, function (err, data) {
@@ -53,46 +51,47 @@ function getRooms(userData) {
             resolve(data)
         })
     })
-}   
+}
 
 function getAllMessages(query) {
-        
+
     return new Promise(function (resolve, reject) {
-        
+
         message.find({
-            "roomname": query.roomName
-        }).limit(query.limit)
-        .skip(query.page * query.limit)
-        .exec(function(err, doc) {
-            if (err) {
-                reject(err)
-            }else {
-                console.log(doc, "respose form the database")
-                resolve(doc)
-            }
-        })
-})
+                "roomname": query.roomName
+            }).limit(query.limit)
+            .skip(query.page * query.limit)
+            .exec(function (err, doc) {
+                if (err) {
+                    reject(err)
+                } else {
+                    // console.log(doc, "respose form the database")
+                    resolve(doc)
+                }
+            })
+    })
 }
 
 function postMessages(query) {
-       
+
     return new Promise(function (resolve, reject) {
-        
+
         const temp = new message({
             "roomname": query.roomname,
-            "messages": query.message,
+            "messages": query.messages,
             "createdBy": query.createdBy,
-            "createdAt": query.createdAt
+            "createdAt": query.createdAt,
+            "picture": query.picture
         })
-        
+
         temp.save(function (err, doc) {
             if (err) {
                 reject(err)
-            }else {
+            } else {
                 resolve(doc)
             }
         })
-})
+    })
 }
 
 
