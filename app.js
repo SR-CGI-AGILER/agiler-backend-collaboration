@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000;
 const collaboration = require('./api/collaboration')
 const logger = require('morgan')
 const parser = require('socket.io-cookie-parser')
+const ENV = require('./config/environment');
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -23,13 +24,14 @@ app.use(bodyParser.urlencoded({
     extended: false
 }))
 app.use(bodyParser.json())
-app.use("/api/v1", collaboration)
+//app.use("/api/v1", collaboration)
 
 socketServer.instantiateSocket(io);
 
 app.get('/', function (req, res) {
     res.sendFile(path.resolve('./index.html'));
 });
+app.use(ENV.apiEndPoint,collaboration);
 
 http.listen(port, function () {
     console.log("listening on port:" + port);
