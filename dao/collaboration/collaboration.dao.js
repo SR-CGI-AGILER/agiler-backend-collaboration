@@ -2,6 +2,7 @@ const db = require('../../db-connection/mongo');
 const room = require('../../model/room');
 const message = require('../../model/message')
 
+
 function findRoom(name) {
     return new Promise(function (resolve, reject) {
         room.find({
@@ -13,7 +14,6 @@ function findRoom(name) {
 }
 
 function createRoom(name) {
-    console.log("lkasjd")
     return new Promise(function (resolve, reject) {
         const temp = new room({
             "roomName": name.roomName,
@@ -21,7 +21,7 @@ function createRoom(name) {
         })
         temp.save(function (err, data) {
             if (err)
-                console.log(err, data, "Sdfasdfasdfasdfasdfasdfasdf")
+                console.log(err)
             resolve(data)
         })
     })
@@ -44,6 +44,7 @@ function addUser(user) {
 
 function getRooms(userData) {
     return new Promise(function (resolve, reject) {
+        
         room.find({
             members: userData.member
         }, function (err, data) {
@@ -52,7 +53,7 @@ function getRooms(userData) {
         })
     })
 }
-
+    
 function getAllMessages(query) {
 
     return new Promise(function (resolve, reject) {
